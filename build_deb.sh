@@ -7,7 +7,7 @@ ARCH="amd64"
 
 # 1. Build Binary with PyInstaller
 echo "Building binary..."
-pyinstaller --onefile --name $APP_NAME --hidden-import=telegram src/bada/main.py
+pyinstaller --onefile --name $APP_NAME --hidden-import=telegram --add-data "src/bada/easter_egg.jpg:." src/bada/main.py
 
 # 2. Prepare Deb Package Structure
 echo "Creating deb package structure..."

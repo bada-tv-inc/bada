@@ -27,7 +27,7 @@ def run_onboarding():
     console.print("Connect with other users and get support.")
     if Confirm.ask("Open community site now?", default=True):
          import webbrowser
-         webbrowser.open("https://bada.ai/community")
+         webbrowser.open("https://bada.io/community")
 
     console.print("\n[bold cyan]Let's set up your environment.[/bold cyan]")
     

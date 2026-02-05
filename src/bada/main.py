@@ -54,7 +54,7 @@ def community():
     Open the Bada Community site.
     """
     import webbrowser
-    url = "https://bada.ai/community"
+    url = "https://bada.io/community"
     console.print(f"[bold green]Opening Bada Community: {url}[/bold green]")
     webbrowser.open(url)
 
@@ -77,6 +77,42 @@ def unnie():
     url = "https://unnie.bada.io"
     console.print(f"[bold green]Connecting to Unnie (Human Support):[/bold green] {url}")
     webbrowser.open(url)
+
+@app.command()
+def security():
+    """
+    Connect to Security Program (sure.us).
+    """
+    import webbrowser
+    url = "https://sure.us"
+    console.print(f"[bold green]Connecting to Security Program:[/bold green] {url}")
+    webbrowser.open(url)
+
+@app.command()
+def nicesunflower():
+    """
+    🌻 ?
+    """
+    import sys
+    import subprocess
+    from pathlib import Path
+    
+    # Locate the image file (works for both source and PyInstaller onefile)
+    if getattr(sys, 'frozen', False):
+        base_path = Path(sys._MEIPASS)
+    else:
+        base_path = Path(__file__).parent
+        
+    image_path = base_path / "easter_egg.jpg"
+    
+    if image_path.exists():
+        console.print("[bold yellow]The sun that makes the ocean sparkle. 🌻🌊[/bold yellow]")
+        if sys.platform == "darwin":
+            subprocess.run(["open", str(image_path)])
+        else:
+            subprocess.run(["xdg-open", str(image_path)])
+    else:
+        console.print("[dim]The sunflower is hiding... (Image file not found)[/dim]")
 
 if __name__ == "__main__":
     app()
