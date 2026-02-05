@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bada"
+version = "0.1.0"
+description = "bada"
+authors = [
+  { name="bada & nicesunflower", email="user@example.com" },
+]
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "typer[all]",
+    "rich",
+    "litellm",
+    "prompt_toolkit",
+    "python-telegram-bot",
+    "pyyaml",
+]
+
+[project.scripts]
+bada = "bada.main:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]

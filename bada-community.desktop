@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Bada Community
+Comment=Join the Bada Community
+Exec=xdg-open https://bada.ai/community
+Icon=utilities-terminal
+Terminal=false
+Categories=Network;WebBrowser;
