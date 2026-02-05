@@ -30,10 +30,41 @@ def run_onboarding():
          webbrowser.open("https://bada.io/community")
 
     console.print("\n[bold cyan]Let's set up your environment.[/bold cyan]")
+
+    # 0. Model Selection
+    console.print("\n[bold]1. Select Default Model[/bold]")
+    console.print("Choose the AI model you want to use by default.")
     
-    # 1. LLM API Keys
-    console.print("\n[bold]1. API Keys[/bold]")
+    models = [
+        "gpt-4o (OpenAI) [Recommended]",
+        "claude-3-5-sonnet (Anthropic)",
+        "ollama/llama3 (Local, requires Ollama)",
+        "Custom..."
+    ]
+    
+    import questionary
+    choice = questionary.select(
+        "Select a model:",
+        choices=models
+    ).ask()
+    
+    if "Custom" in choice:
+        default_model = Prompt.ask("Enter custom model name (e.g. azure/gpt-4)")
+    elif "gpt-4o" in choice:
+        default_model = "gpt-4o"
+    elif "claude" in choice:
+        default_model = "claude-3-5-sonnet"
+    elif "ollama" in choice:
+        default_model = "ollama/llama3"
+    else:
+        default_model = "gpt-4o"
+        
+    console.print(f"Selected default model: [bold green]{default_model}[/bold green]")
+    
+    # 2. LLM API Keys
+    console.print("\n[bold]2. API Keys[/bold]")
     console.print("To use this tool, you need an API key for your preferred LLM provider.")
+    console.print("(If using Ollama/Local, you can skip this by pressing Enter)")
     openai_key = Prompt.ask("Enter OpenAI API Key (optional)", password=True, default="")
     anthropic_key = Prompt.ask("Enter Anthropic API Key (optional)", password=True, default="")
 
@@ -54,6 +85,7 @@ def run_onboarding():
 
     # Save Config
     config_data = {
+        "default_model": default_model,
         "api_keys": {
             "openai": openai_key,
             "anthropic": anthropic_key

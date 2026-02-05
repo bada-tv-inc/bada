@@ -29,7 +29,7 @@ class Config(BaseModel):
         telegram_conf = data.get("telegram", {})
         
         return cls(
-            model="gpt-4o", # Default, can be overridden by CLI args later
+            model=data.get("default_model", "gpt-4o"),
             auto_run=False,
             telegram_enabled=telegram_conf.get("enabled", False),
             telegram_token=telegram_conf.get("token"),

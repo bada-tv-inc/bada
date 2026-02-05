@@ -22,6 +22,7 @@ dependencies = [
     "prompt_toolkit",
     "python-telegram-bot",
     "pyyaml",
+    "questionary",
 ]
 
 [project.scripts]

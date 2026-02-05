@@ -8,7 +8,7 @@ console = Console()
 
 @app.command()
 def start(
-    model: str = typer.Option("gpt-4o", help="Model to use (e.g., gpt-4o, claude-3-5-sonnet)"),
+    model: str = typer.Option(None, help="Model to use (overrides config default)"),
     auto_run: bool = typer.Option(False, help="Auto-run code without confirmation (DANGEROUS)"),
     debug: bool = typer.Option(False, help="Enable debug mode")
 ):
