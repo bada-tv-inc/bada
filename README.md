@@ -32,6 +32,46 @@ bada start --auto-run
 ```
 
 
+## YouTube automation (`bada youtube`)
+
+Drop in a raw recording; bada cuts it, captions it, writes the title/description/chapters,
+and uploads it to YouTube as **private**. Nothing goes public until you review it and run `publish`.
+
+```
+raw.mp4 → whisper transcript → cut silences + retakes (LLM) → ffmpeg render
+        → captions.srt → title / description / tags / chapters (LLM) → PRIVATE upload
+                                                       you review in Studio → bada youtube publish
+```
+
+### Setup (one-time)
+1. `pip install -e '.[youtube]'` and install `ffmpeg` (`sudo apt install ffmpeg` / `brew install ffmpeg`).
+2. In [Google Cloud Console](https://console.cloud.google.com/): create a project, enable **YouTube Data API v3**,
+   configure the OAuth consent screen (add yourself as a test user), and create an **OAuth client ID → Desktop app**.
+   Download the JSON.
+3. `bada youtube auth --client-secret ~/Downloads/client_secret_xxx.json`
+
+### Use
+```bash
+bada youtube process raw.mp4            # one video → private upload
+bada youtube process raw.mp4 --no-upload  # only produce files in raw_bada/
+bada youtube watch ~/Videos/inbox       # every new video in the folder → private upload
+bada youtube status ~/Videos/inbox      # what's been uploaded and still private
+bada youtube publish <video_id>         # after you've checked it: make it public
+bada youtube publish <video_id> --at 2026-10-10T19:00:00+09:00   # or schedule it
+```
+
+Each video gets a `<name>_bada/` folder with `transcript.json`, `edits.json` (every cut and why),
+`captions.srt`, `package.json` and `final.mp4`, so you can check or redo any step.
+Useful flags: `--no-silence`, `--no-retakes`, `--burn-subtitles`, `--whisper-model medium`, `--language en`, `--thumbnail thumb.jpg`.
+
+### Limits to know
+- **Audit required before anything can go public.** Videos uploaded from an API project that hasn't passed
+  Google's [API compliance audit](https://support.google.com/youtube/contact/yt_api_form) are *locked* private,
+  and neither `publish` nor Studio can unlock them. Upload + review works right away; apply for the audit
+  (free, takes a few weeks) before you rely on `publish`.
+- Default quota is 10,000 units/day and an upload costs ~1,600 → about 6 uploads per day.
+- Custom thumbnails need a phone-verified channel.
+
 ## License & Disclaimer
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 

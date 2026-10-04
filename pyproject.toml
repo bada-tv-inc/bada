@@ -25,6 +25,14 @@ dependencies = [
     "questionary",
 ]
 
+[project.optional-dependencies]
+youtube = [
+    "faster-whisper",
+    "google-api-python-client",
+    "google-auth-oauthlib",
+]
+dev = ["pytest"]
+
 [project.scripts]
 bada = "bada.main:app"
 
