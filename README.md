@@ -72,6 +72,46 @@ Useful flags: `--no-silence`, `--no-retakes`, `--burn-subtitles`, `--whisper-mod
 - Default quota is 10,000 units/day and an upload costs ~1,600 → about 6 uploads per day.
 - Custom thumbnails need a phone-verified channel.
 
+## Reels research & production (`bada reels`)
+
+Learn from 1M+ view reels in your niche, then cut **your** video the same way.
+
+```
+viral reel URLs ─► analyze ─► report ─► make (our video) ─► reel.mp4 + caption.txt
+```
+
+```bash
+pip install -e '.[reels]'
+
+# 1. Analyse viral reels (URLs you pick, one per line in urls.txt)
+bada reels analyze --urls urls.txt --min-views 1000000
+# 2. What repeats across them: formulas, hook rules, pacing, editing techniques
+bada reels report
+# 3. Make our reel following those formulas
+bada reels make our_video.mp4
+bada reels make our_video.mp4 --plan-only        # review/edit plan.json first
+bada reels make our_video.mp4 --plan our_video_reel/plan.json
+```
+
+**analyze** writes `reels_research/<id>/` per reel:
+
+| step | output |
+|---|---|
+| download, original quality (yt-dlp, best video+audio, no re-encode) | `video.mp4`, `info.json` (views, likes, caption, music) |
+| speech to text, sentence level | `transcript.json` |
+| first 3 s, one full-res frame every 0.125 s (24 frames) + contact sheet | `hook_frames/00.000s.png …`, `sheet.jpg` |
+| hard cuts and audio spikes/clipping, per second | `signals.json` → `timeline` |
+| element-by-element breakdown (vision LLM): hook, structure, format, editing, pacing, audio, CTA, formula, template | `analysis.json`, `analysis.md` |
+
+**make** picks and reorders clips from our transcript to fit the best formula (strongest result first),
+then renders 1080×1920 with full-screen / black-canvas layouts, punch-in “pop” zooms, one-word kinetic
+captions, headlines, a whoosh on every cut and a comment-keyword CTA. Output: `<video>_reel/reel.mp4`,
+`caption.txt`, `plan.json`. Nothing is posted; you review and post it yourself.
+
+Notes: downloading other creators' reels is against Instagram's terms and they stay their copyright —
+use them for private analysis only, never re-upload. If yt-dlp needs a login, pass
+`--cookies-browser chrome` with a **separate** account, not the one you manage.
+
 ## License & Disclaimer
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 

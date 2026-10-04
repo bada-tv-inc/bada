@@ -2,10 +2,12 @@ import typer
 from rich.console import Console
 from bada.interpreter import Interpreter
 from bada.config import Config
+from bada.reels.cli import app as reels_app
 from bada.youtube.cli import app as youtube_app
 
 app = typer.Typer()
 app.add_typer(youtube_app, name="youtube")
+app.add_typer(reels_app, name="reels")
 console = Console()
 
 @app.command()
